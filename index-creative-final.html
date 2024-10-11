@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Real Characters of a Creative Crafter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Imprima&family=Niconne&family=Nixie+One&family=Oswald:wght@200..700&family=Pacifico&family=Passion+One:wght@400;700;900&family=Poetsen+One&family=Suez+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+      }
+
+      :root {
+        --color-orange: #ec7c60;
+        --color-dark: black;
+        --color-light: white;
+        --color-bg: #fcf3e1;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        font-size: 16px;
+        overflow: hidden;
+      }
+      main {
+        width: 100%;
+        height: 100lvh;
+        background-color: var(--color-bg);
+        padding-top: 2rem;
+      }
+      .simulation {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .header-container {
+        text-align: center;
+      }
+      h4 {
+        font-family: "Imprima", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 2vw;
+        margin-top: 0rem;
+        margin-bottom: 2rem;
+      }
+      h4 > span.span-line {
+        color: var(--color-dark);
+      }
+      h4 > span:not(span.span-line) > span {
+        color: var(--color-orange);
+      }
+      .span-line {
+        position: relative;
+        display: inline-flex;
+        overflow: hidden;
+      }
+      .span-line-inner {
+        position: relative;
+        display: block;
+      }
+      .bg-black {
+        background-color: var(--color-dark);
+        color: var(--color-light);
+      }
+      .bg-white {
+        background-color: var(--color-light);
+      }
+      .bg-orange {
+        background-color: var(--color-orange);
+        color: var(--color-bg);
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-weight: 700;
+        line-height: 1;
+        font-size: 6.5vw;
+        border-radius: 200px;
+        padding-top: 2.5vw;
+        padding-bottom: 2.5vw;
+        padding-left: 4.5vw;
+        padding-right: 4.5vw;
+        text-transform: capitalize;
+      }
+
+      span.hidden-words {
+        font-family: "Imprima", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 3vw;
+        text-transform: capitalize;
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+        text-align: center;
+      }
+      span.original-word,
+      span.hidden-words {
+        transition: opacity 0.6s linear;
+      }
+
+      span.hidden-words.reveal,
+      span.original-word.reveal {
+        opacity: 1;
+        visibility: visible;
+        width: auto;
+        text-align: center;
+      }
+      span.hidden-words.unreveal,
+      span.original-word.unreveal {
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+        text-align: center;
+      }
+
+      section {
+        height: 100lvh;
+        width: 100vw;
+      }
+      canvas {
+        position: absolute;
+        inset: 0;
+        top: 0;
+        left: 0;
+      }
+      contact-tri-icon,
+      contact-star-icon {
+        background-color: #050505;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        inset: 0;
+      }
+
+      contact-tri-icon svg {
+        position: absolute;
+      }
+
+      /* Apply fonts to specific tags */
+      .tag-1.ambition {
+        font-family: "Poetsen One", sans-serif;
+      }
+
+      .tag-2.passion {
+        font-family: "Passion One", sans-serif;
+      }
+
+      .tag-3.curiosity {
+        font-family: "Niconne", cursive;
+      }
+
+      .tag-4.dedication {
+        font-family: "Nixie One", sans-serif;
+      }
+
+      .tag-5.creativity {
+        font-family: "Suez One", serif;
+      }
+
+      .tag-6.innovation {
+        font-family: "Pacifico", cursive;
+      }
+      /* Initial states */
+      #arrow-1,
+      #arrow-2 {
+        transition: all 0.4s cubic-bezier(0.36, 0, 0.66, -0.56);
+      }
+
+      /* arrow-2 on top of arrow-1 */
+      #arrow-2 {
+        transform: translateX(-100%);
+      }
+
+      /* On hover */
+      .move-forward #arrow-1 {
+        transform: translateX(80%);
+        opacity: 0;
+      }
+
+      .move-forward #arrow-2 {
+        transform: translateX(0%);
+      }
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(90deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+
+      .rotate {
+        svg path#star {
+          animation-name: rotate;
+          animation-duration: 0.5s;
+          animation-direction: normal;
+          animation-iteration-count: 1;
+          transform-origin: center;
+          /* animation-timing-function: ease-in-out; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section id="canvas-holder">
+        <div class="header-container">
+          <h4 class="header-text">
+            Behind the Curtain: <br />The <span>Real Characters</span> of a
+            Creative Crafter :)
+          </h4>
+        </div>
+
+        <physics-simulation class="simulation">
+          <div data-target="physics-simulation.container" class="container">
+            <a
+              data-target="physics-simulation.element"
+              class="tag tag-1 ambition bg-white"
+              ><span class="original-word">ambition</span>
+              <span class="hidden-words">Goal Obsession Disorder</span>
+            </a>
+            <a
+              data-target="physics-simulation.element"
+              class="tag tag-2 passion bg-orange"
+              ><span class="original-word">Passion</span>
+              <span class="hidden-words">Overzealous Enthusiasm</span>
+            </a>
+            <a
+              data-target="physics-simulation.element"
+              class="tag tag-3 curiosity bg-white"
+              ><span class="original-word">curiosity</span>
+              <span class="hidden-words">Attention Deficit Wonderland</span>
+            </a>
+            <contact-tri-icon data-target="physics-simulation.element">
+              <svg
+                width="100"
+                height="100"
+                viewBox="0 0 100 100"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="arrowGroup">
+                  <path
+                    id="arrow-1"
+                    d="M94 46.5359C96.6667 48.0755 96.6667 51.9245 94 53.4641L31 89.8372C28.3333 91.3768 25 89.4523 25 86.3731V13.6269C25 10.5477 28.3333 8.62323 31 10.1628L94 46.5359Z"
+                    fill="white"
+                  />
+                  <path
+                    id="arrow-2"
+                    d="M94 46.5359C96.6667 48.0755 96.6667 51.9245 94 53.4641L31 89.8372C28.3333 91.3768 25 89.4523 25 86.3731V13.6269C25 10.5477 28.3333 8.62323 31 10.1628L94 46.5359Z"
+                    fill="white"
+                  />
+                </g>
+              </svg>
+            </contact-tri-icon>
+            <a
+              data-target="physics-simulation.element"
+              class="tag tag-4 dedication bg-black"
+              ><span class="original-word">dedication</span>
+              <span class="hidden-words">Commitment Tunnel Vision</span>
+            </a>
+            <contact-star-icon data-target="physics-simulation.element">
+              <svg
+                width="120"
+                height="114"
+                viewBox="0 0 120 114"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  id="star"
+                  d="M56.1958 3.70821C57.3932 0.0229714 62.6068 0.0229625 63.8042 3.70821L75.0424 38.2959C75.5779 39.9439 77.1138 41.0598 78.8467 41.0598H115.214C119.089 41.0598 120.7 46.0183 117.565 48.2959L88.1434 69.6722C86.7415 70.6908 86.1548 72.4963 86.6903 74.1443L97.9285 108.732C99.1259 112.417 94.908 115.482 91.7732 113.204L62.3511 91.8278C60.9492 90.8092 59.0508 90.8092 57.6489 91.8278L28.2269 113.204C25.092 115.482 20.8741 112.417 22.0715 108.732L33.3097 74.1444C33.8452 72.4963 33.2585 70.6908 31.8566 69.6722L2.43459 48.2959C-0.700262 46.0183 0.91083 41.0598 4.78572 41.0598H41.1533C42.8862 41.0598 44.4221 39.944 44.9576 38.2959L56.1958 3.70821Z"
+                  fill="white"
+                />
+              </svg>
+            </contact-star-icon>
+            <a
+              data-target="physics-simulation.element"
+              class="tag tag-5 creativity bg-black"
+              ><span class="original-word">creativity</span>
+              <span class="hidden-words">Idea Overload</span>
+            </a>
+            <a
+              data-target="physics-simulation.element"
+              class="tag tag-6 innovation bg-orange"
+              ><span class="original-word">innovation</span>
+              <span class="hidden-words">Change Frenzy</span>
+            </a>
+            <!-- Add more tags as needed -->
+          </div>
+        </physics-simulation>
+      </section>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script>
+      class PhysicsSimulation extends HTMLElement {
+        // This method is called when the element is added to the DOM
+        connectedCallback() {
+          this.animateText();
+        }
+
+        // querySelector returns a single element (the first match).
+        // getElementsByClassName returns a collection of elements, even if there’s only one match.
+        animateText() {
+          let triggerElement = document.querySelector(".header-text");
+          let textContent = triggerElement.innerHTML;
+          let simulationHolder = document.querySelector(
+            "physics-simulation.simulation"
+          );
+
+          // Replace each word with a wrapped version
+          let wrappedContent = textContent.replace(
+            /(^|<\/?[^>]+>|\s+)([^\s<]+)/g,
+            '$1<span class="span-line"><span class="span-line-inner">$2</span></span>'
+          );
+
+          // Update the innerHTML with the wrapped content
+          triggerElement.innerHTML = wrappedContent;
+          let targetElement = document.querySelectorAll(".span-line-inner");
+          gsap.set(simulationHolder, {
+            opacity: 0,
+          });
+          let tl = gsap.timeline();
+
+          tl.from(targetElement, {
+            y: "100%",
+            stagger: 0.1,
+            ease: "power3.out",
+            duration: 1,
+            delay: 0,
+          });
+          tl.to(simulationHolder, {
+            opacity: 1,
+            duration: 0.001,
+            delay: 1,
+            ease: "power3.out",
+            onComplete: () => {
+              this.initSimulation();
+            },
+          });
+        }
+
+        initSimulation() {
+          const { Engine, Render, Composite, Bodies, Body } = Matter;
+          const canvasContainer = document.getElementById("canvas-holder");
+          const engine = Engine.create();
+          engine.world.gravity.y = 1;
+          // render create a canvas
+          const render = Render.create({
+            element: this,
+            engine: engine,
+            options: {
+              width: this.clientWidth,
+              height: this.clientHeight,
+              wireframes: false,
+              showAngleIndicator: false,
+              showBounds: false,
+              hasBounds: false,
+              //background only works when wireframes is false
+              background: "transparent",
+            },
+          });
+
+          const elements = this.querySelectorAll(
+            '[data-target="physics-simulation.element"]'
+          );
+          const headerHeight =
+            document.querySelector(".header-container").offsetHeight;
+
+          let ground = Bodies.rectangle(
+            this.clientWidth / 2,
+            this.clientHeight + 5,
+            this.clientWidth,
+            10,
+            { isStatic: true }
+          );
+          const wallLeft = Bodies.rectangle(
+            -5,
+            this.clientHeight / 2,
+            10,
+            this.clientHeight,
+            { isStatic: true }
+          );
+          const wallRight = Bodies.rectangle(
+            this.clientWidth + 5,
+            this.clientHeight / 2,
+            10,
+            this.clientHeight,
+            { isStatic: true }
+          );
+
+          //mouse
+          let mouse = Matter.Mouse.create(render.canvas);
+          let mouseConstraint = Matter.MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: {
+              stiffness: 0.2,
+              render: {
+                visible: true,
+              },
+            },
+          });
+          Composite.add(engine.world, mouseConstraint);
+
+          let bodies = [];
+          // Positioning variables
+          let x = 0; // Horizontal position
+          let y = headerHeight;
+          const canvasWidth = this.clientWidth;
+
+          const elementWidth = this.clientWidth / elements.length;
+          //8
+          const frictionAirValues = [
+            0.001, 0.008, 0.001, 0.008, 0.005, 0.004, 0.002, 0.001,
+          ];
+          elements.forEach((element, index) => {
+            const rect = element.getBoundingClientRect();
+            let bodyWidth, bodyHeight;
+
+            bodyWidth = rect.width;
+            bodyHeight = rect.height;
+
+            if (
+              element.tagName === "CONTACT-TRI-ICON" ||
+              element.tagName === "CONTACT-STAR-ICON"
+            ) {
+              // For square elements
+              bodyWidth = bodyHeight = elementWidth;
+              // console.log("iconBodyHeight:", bodyHeight);
+            } else {
+              // For non-square elements
+              bodyWidth = rect.width;
+              bodyHeight = rect.height;
+              // console.log("tagBodyHeight:", bodyHeight);
+            }
+
+            let ca = x + bodyWidth;
+            let cb = canvasWidth;
+
+            if (ca >= cb) {
+              x = 0; // Reset horizontal position
+              y += bodyHeight; // Move to the next line
+            }
+
+            const ox = x + bodyWidth / 2;
+            const oy = y + bodyHeight / 2;
+            if (
+              element.tagName === "CONTACT-TRI-ICON" ||
+              element.tagName === "CONTACT-STAR-ICON"
+            ) {
+              // console.log("ox", ox);
+              // console.log("oy", oy);
+            }
+
+            const randomAngle = Math.random() * (Math.PI / 2) - Math.PI / 4;
+
+            const body = Bodies.rectangle(ox, oy, bodyWidth, bodyHeight, {
+              chamfer: {
+                radius: [60, 60, 60, 60],
+              },
+              render: {
+                fillStyle: "transparent",
+              },
+              angle: randomAngle,
+              restitution: 0.6,
+              frictionAir: 0.001,
+              friction: 0.1,
+            });
+
+            body.element = element;
+            //console.log(body.element);
+            bodies.push(body);
+
+            // random speed (betwen -0.03 and 0.01)
+            const randomAngularVelocity = Math.random() * (0.1 + 0.1) - 0.1;
+
+            // start speed
+            const randomSpeed = Math.random() * 0.1 + 0.001; //  0.001 to 0.1
+            //Body.setVelocity(body, { x: 0, y: randomSpeed });
+
+            Composite.add(engine.world, body);
+
+            Matter.Events.on(engine, "afterUpdate", () => {
+              let offsetX;
+              let offsetY;
+              if (
+                element.tagName === "CONTACT-TRI-ICON" ||
+                element.tagName === "CONTACT-STAR-ICON"
+              ) {
+                // For square elements
+                offsetX = bodyWidth / 2;
+                offsetY = bodyHeight / 2;
+              } else {
+                offsetX = bodyWidth / 2;
+                offsetY = bodyHeight / 2;
+              }
+
+              element.style.transform = `translate(${
+                body.position.x - offsetX
+              }px, ${body.position.y - offsetY}px) rotate(${body.angle}rad)`;
+            });
+
+            // set up style
+            // Ensure round shape for contact-tri-icon and contact-star-icon
+            if (
+              element.tagName === "CONTACT-TRI-ICON" ||
+              element.tagName === "CONTACT-STAR-ICON"
+            ) {
+              const size = bodyWidth; // Container size
+              element.style.width = `${size}px`;
+              element.style.height = `${size}px`; // Set height equal to width
+              element.style.borderRadius = "50%"; // Ensure it's round
+
+              // Adjust the SVG inside to be 50% of the container size
+              const svgs = element.querySelectorAll("svg");
+              svgs.forEach((svg) => {
+                svg.style.width = `${size * 0.5}px`; // SVG width as 50% of container
+                svg.style.height = `${size * 0.5}px`; // SVG height as 50% of container
+              });
+            } else {
+              element.style.width = `${bodyWidth}px`;
+              element.style.height = `${bodyHeight}px`; // Other elements do not need to be round
+            }
+
+            Matter.Events.on(mouseConstraint, "mousemove", function (event) {
+              var mousePosition = event.mouse.position;
+              var foundBodies = Matter.Query.point(bodies, mousePosition);
+              console.log(foundBodies);
+              bodies.forEach(function (body) {
+                var element = body.element;
+                // Toggle the current element
+                let originalWord = element.querySelector(".original-word");
+                let hiddenWords = element.querySelector(".hidden-words");
+                if (originalWord && hiddenWords) {
+                  hiddenWords.classList.remove("reveal");
+                  originalWord.classList.remove("unreveal");
+                }
+
+                if (element && element.tagName === "CONTACT-TRI-ICON") {
+                  element.classList.remove("move-forward");
+                }
+                if (element && element.tagName === "CONTACT-STAR-ICON") {
+                  element.classList.remove("rotate");
+                }
+              });
+
+              if (foundBodies.length > 0) {
+                var body = foundBodies[0];
+                //console.log(body);
+                var element = body.element;
+                // Toggle the current element
+                let originalWord = element.querySelector(".original-word");
+                let hiddenWords = element.querySelector(".hidden-words");
+                if (originalWord && hiddenWords) {
+                  hiddenWords.classList.add("reveal");
+                  originalWord.classList.add("unreveal");
+                }
+
+                if (element && element.tagName === "CONTACT-TRI-ICON") {
+                  // Add move-forward class to the element containing the SVGs
+                  element.classList.add("move-forward");
+                }
+                if (element && element.tagName === "CONTACT-STAR-ICON") {
+                  element.classList.add("rotate");
+                }
+              }
+            });
+          });
+
+          Composite.add(engine.world, [ground, wallLeft, wallRight]);
+
+          // allow scroll through the canvas - don't understand
+          mouseConstraint.mouse.element.removeEventListener(
+            "mousewheel",
+            mouseConstraint.mouse.mousewheel
+          );
+          mouseConstraint.mouse.element.removeEventListener(
+            "DOMMouseScroll",
+            mouseConstraint.mouse.mousewheel
+          );
+
+          Engine.run(engine);
+          Render.run(render);
+
+          const handleResize = () => {
+            render.canvas.width = this.clientWidth;
+            render.canvas.height = this.clientHeight;
+
+            Matter.Body.setPosition(
+              ground,
+              Matter.Vector.create(this.clientWidth / 2, this.clientHeight + 5)
+            );
+
+            Matter.Body.setPosition(
+              wallLeft,
+              Matter.Vector.create(-5, this.clientHeight / 2)
+            );
+
+            Matter.Body.setPosition(
+              wallRight,
+              Matter.Vector.create(this.clientWidth + 5, this.clientHeight / 2)
+            );
+          };
+
+          window.addEventListener("resize", handleResize);
+        }
+      }
+
+      customElements.define("physics-simulation", PhysicsSimulation);
+    </script>
+  </body>
+</html>
